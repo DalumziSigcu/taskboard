@@ -1,0 +1,11 @@
+@TaskBoard.Api_HostAddress = http://localhost:5090
+
+GET {{TaskBoard.Api_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
+
+GET {{TaskBoard.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
