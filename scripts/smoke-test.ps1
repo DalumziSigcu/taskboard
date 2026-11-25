@@ -42,7 +42,7 @@ if ($ping.Status -ne 401) { Write-Host "API not reachable at $Base (status $($pi
 Write-Host "API is up."
 
 Write-Host "`n== Users =="
-$aliceAuth = Get-Auth "test@example.com" "Test User"
+$aliceAuth = Get-Auth "alice@example.com" "Alice"
 $bobAuth   = Get-Auth "bob@example.com" "Bob"
 $carolAuth = Get-Auth "carol@example.com" "Carol"
 $alice = $aliceAuth.Data.token; $bob = $bobAuth.Data.token; $carol = $carolAuth.Data.token
@@ -104,3 +104,5 @@ Check "owner deletes the test board" ((Invoke-Api DELETE $b $alice $null).Status
 $color = "Green"
 if ($script:fail -gt 0) { $color = "Red" }
 Write-Host "`nResult: $($script:pass) passed, $($script:fail) failed" -ForegroundColor $color
+
+
