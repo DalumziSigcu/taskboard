@@ -13,6 +13,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IBoardAccessService, BoardAccessService>();
 
 var jwt = builder.Configuration.GetSection("Jwt");
 var key = jwt["Key"]
@@ -56,3 +57,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
