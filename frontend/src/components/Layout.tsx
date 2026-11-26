@@ -16,8 +16,12 @@ export function Layout() {
   return (
     <>
       <header className="app-header">
-        <Link to="/" className="brand">TaskBoard</Link>
+        <Link to="/" className="brand">
+          <span className="brand-mark">T</span>
+          TaskBoard
+        </Link>
         <div className="header-right">
+          <span className="avatar">{user?.displayName.charAt(0).toUpperCase()}</span>
           <span className="muted">{user?.displayName}</span>
           <button className="btn btn-ghost" onClick={onLogout}>Sign out</button>
         </div>
