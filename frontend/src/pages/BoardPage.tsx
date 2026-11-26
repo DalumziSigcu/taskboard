@@ -24,6 +24,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { boardsApi } from "../api/api";
 import { errorMessage } from "../api/client";
 import type { Card, Column, Role } from "../types";
+import { useBoardRealtime } from "../realtime/useBoardRealtime";
 
 const rank: Record<Role, number> = { Viewer: 0, Member: 1, Admin: 2, Owner: 3 };
 
@@ -212,6 +213,7 @@ export function BoardPage() {
   const { boardId } = useParams<{ boardId: string }>();
   const id = boardId ?? "";
   const qc = useQueryClient();
+  const live = useBoardRealtime(id);
 
   const board = useQuery({
     queryKey: ["board", id],
@@ -431,6 +433,7 @@ export function BoardPage() {
           )}
         </div>
         <div className="head-right">
+          <span className={`live live-${live}`}>{live === "live" ? "Live" : live === "connecting" ? "Connecting" : "Offline"}</span>
           <span className={`badge badge-${b.myRole.toLowerCase()}`}>You: {b.myRole}</span>
           {canManage && !renaming && (
             <button className="btn btn-ghost" onClick={startRename}>Edit board</button>
@@ -533,3 +536,4 @@ export function BoardPage() {
     </div>
   );
 }
+
