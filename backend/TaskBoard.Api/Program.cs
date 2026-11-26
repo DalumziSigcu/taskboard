@@ -20,7 +20,7 @@ builder.Services.AddScoped<IBoardAccessService, BoardAccessService>();
 
 var jwt = builder.Configuration.GetSection("Jwt");
 var key = jwt["Key"]
-    ?? throw new InvalidOperationException("Jwt:Key is missing. Set it with dotnet user-secrets.");
+    ?? throw new InvalidOperationException("Jwt:Key is missing. Set it with dotnet user-secrets or the Jwt__Key environment variable.");
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -54,14 +54,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+    ?? new[] { "http://localhost:5173" };
+
 builder.Services.AddCors(options =>
     options.AddPolicy("Frontend", policy => policy
-        .WithOrigins("http://localhost:5173")
+        .WithOrigins(allowedOrigins)
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials()));
 
 var app = builder.Build();
+
+if (app.Configuration.GetValue<bool>("Database:MigrateOnStartup"))
+{
+    using var scope = app.Services.CreateScope();
+    scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
@@ -73,5 +82,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHub<BoardHub>("/hubs/board");
+app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
 app.Run();
