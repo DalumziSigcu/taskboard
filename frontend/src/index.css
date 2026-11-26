@@ -104,3 +104,40 @@ input:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
 .column h2 { font-size: 0.95rem; margin: 0 0 0.25rem; display: flex; justify-content: space-between; }
 .card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.75rem; }
 .empty { font-size: 0.85rem; padding: 0.25rem; }
+
+textarea {
+  font: inherit; color: inherit; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.6rem 0.75rem; min-width: 0; resize: vertical;
+}
+textarea:focus, select:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
+select {
+  font: inherit; color: inherit; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.6rem 0.5rem;
+}
+
+.head-right { display: flex; align-items: center; gap: 0.5rem; }
+.rename-form, .member-form { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+.rename-form input { flex: 1 1 180px; }
+.member-form { margin-bottom: 1rem; }
+.member-form input { flex: 1 1 260px; }
+
+.card { cursor: grab; touch-action: none; display: flex; flex-direction: column; gap: 0.2rem; }
+.card:hover { border-color: var(--primary); }
+.card-overlay { cursor: grabbing; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25); background: var(--surface); }
+.column-body { display: flex; flex-direction: column; gap: 0.5rem; min-height: 48px; }
+.add-card input, .add-column input { width: 100%; }
+.add-column { flex: 0 0 290px; }
+
+.btn-danger { background: var(--danger-bg); color: var(--danger); border-color: var(--danger); }
+
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); display: grid; place-items: center;
+  padding: 1rem; z-index: 20;
+}
+.modal {
+  width: 100%; max-width: 460px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem;
+}
+.modal h2 { margin: 0; }
+.modal-actions { display: flex; gap: 0.5rem; align-items: center; }
+.spacer { flex: 1; }
